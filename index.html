@@ -1,0 +1,49 @@
+Associations:
+
+In Sequelize, associations define relationships between models in a relational database like PostgreSQL. 
+They help in structuring the data efficiently and simplifying queries. 
+Sequelize provides several types of associations:
+
+One-to-One (1:1) → hasOne & belongsTo
+One-to-Many (1:M) → hasMany & belongsTo
+Many-to-Many (M:N) → belongsToMany
+
+
+1. One-to-One (1:1) Relationship
+A one-to-one relationship means that a row in one table is associated with exactly one row in another table.
+
+Example: Employee & Profile
+Each Employee has one Profile, and each Profile belongs to one Employee.
+
+---------
+2. One-to-Many (1:M) Relationship
+A one-to-many relationship means that one record in a table is related to multiple records in another table.
+
+Example: Department & Employees
+A Department has many Employees.
+Each Employee belongs to one Department.
+
+---------
+3. Many-to-Many (M:N) Relationship
+A many-to-many relationship means that multiple records in one table are related to multiple records in another table.
+
+Example: Employees & Projects
+An Employee can work on multiple Projects.
+A Project can have multiple Employees.
+
+
+
+
+A is called the source model and B is called the target model. This terminology is important.
+
+The A.hasOne(B) association means that a One-To-One relationship exists between A and B, with the foreign key being defined in the target model (B).
+
+The A.belongsTo(B) association means that a One-To-One relationship exists between A and B, with the foreign key being defined in the source model (A).
+
+The A.hasMany(B) association means that a One-To-Many relationship exists between A and B, with the foreign key being defined in the target model (B).
+
+These three calls will cause Sequelize to automatically add foreign keys to the appropriate models (unless they are already present).
+
+The A.belongsToMany(B, { through: 'C' }) association means that a Many-To-Many relationship exists between A and B, using table C as junction table, which will have the foreign keys (aId and bId, for example). Sequelize will automatically create this model C (unless it already exists) and define the appropriate foreign keys on it.
+
+Note: In the examples above for belongsToMany, a string ('C') was passed to the through option. In this case, Sequelize automatically generates a model with this name. However, you can also pass a model directly, if you have already defined it.

@@ -1,20 +1,17 @@
-const sequelize = require("./database");
-const User = require("./models/User");
+const sequelize = require('../config/database'); // Correctly import database instance
+const Employee = require('./employee');
+const Profile = require('./profile');
 
-const start = async () => {
+// Sync models with database
+const syncDatabase = async () => {
   try {
-    await sequelize.sync({ force: true }); // This creates the table, dropping it first if it already existed
-    console.log("Database & tables created!");
-
-    // Insert a test user
-    await User.create({ name: "Rasagna", email: "rasagna@example.com" });
-
-    // Fetch users
-    const users = await User.findAll();
-    console.log("Users:", users.map((u) => u.toJSON()));
+    await sequelize.sync({ force: true }); // Use `force: false` to avoid data loss
+    console.log('Database & tables created successfully!');
   } catch (error) {
-    console.error("Error:", error);
+    console.error('Error syncing database:', error);
   }
 };
 
-start();
+syncDatabase();
+
+module.exports = { sequelize, Employee, Profile };
